@@ -1,3 +1,10 @@
+/*
+Digital Ownership: Controlled by cryptographic keys, not physical possession
+Transaction: A message that transfers ownership from one key to another
+Balance: Not stored anywhere - calculated by examining transaction history
+Addresses: Public identifiers derived from public keys
+Your private key proves ownership. Your address is where people send money.
+*/
 package main
 
 import (
