@@ -8,4 +8,3 @@ This repository contains a study project focused on blockchain infrastructure, i
 4. **digital-identity**: A basic digital identity management system using public/private key pairs.
 5. **mining-system**: A simple mining system that simulates mining operations and block creation.
 6. **utxo**: A basic implementation of the UTXO (Unspent Transaction Output) model used in cryptocurrencies. See [transaction-wallets](./transaction-wallets/README.md).
-7. *utxo*: A basic implementation of the UTXO (Unspent Transaction Output) model used in cryptocurrencies.
