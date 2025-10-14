@@ -71,3 +71,34 @@ This means they have one single, consistent view of the entire Ethereum state at
 9. it is important to remember that a contract’s code cannot be changed. However, a contract can be “deleted,” removing the code and its internal state (storage) from its address, leaving a blank account. Any transactions sent to that account address after the contract has been deleted do not result in any code execution, because there is no longer any code there to execute. To delete a contract, you execute an EVM opcode called SELFDESTRUCT (previously called SUICIDE).
 10. Deleting a contract in this way does not remove the transaction history (past) of the contract, since the blockchain itself is immutable.
 11. It is also important to note that the SELFDESTRUCT capability will only be available if the contract author programmed the smart contract to have that functionality. If the contract’s code does not have a SELFDESTRUCT opcode, or it is inaccessible, the smart contract cannot be deleted.
+
+### Example of writing Smart Contract in Solidity
+
+This can be found in the [Faucet.sol](smart-contracts-ethereum/Faucet.sol) contract code. We will use the Solidity compiler on the command line to compile our contract directly:
+
+```
+solc --optimize --bin smart-contracts-ethereum/Faucet.sol
+```
+
+The result that solc produces is a hex-serialized binary that can be submitted to the Ethereum blockchain.
+
+To summarize, a contract’s life cycle starts with a creation transaction from an EOA or contract account. If there is a constructor, it is executed as part of contract creation, to initialize the state of the contract as it is being created, and is then discarded.
+Contracts are destroyed by a special EVM opcode called SELFDESTRUCT. n Solidity, this opcode is exposed as a high-level built-in function called selfdestruct, which takes one argument: the address to receive any ether balance remaining in the contract account.
+Note that you must explicitly add this command to your contract if you want it to be deletable—this is the only way a contract can be deleted, and it is not present by default. In this way, users of a contract who might rely on a contract being there forever can be certain that a contract can’t be deleted if it doesn’t contain a SELFDESTRUCT opcode.
+
+### The Ethereum Contract ABI
+
+In computer software, an application binary interface is an interface between two program modules; often, between the operating system and user programs. An ABI defines how data structures and functions are accessed in machine code.
+In Ethereum, the ABI is used to encode contract calls for the EVM and to read data out of transactions. The purpose of an ABI is to define the functions in the contract that can be invoked and describe how each function will accept arguments and return its result.
+
+We use the solc command-line Solidity compiler to produce the ABI for our Faucet.sol example contract:
+```
+solc --abi smart-contracts-ethereum/Faucet.sol
+
+======= smart-contracts-ethereum/Faucet.sol:Faucet =======
+Contract JSON ABI
+[{"inputs":[{"internalType":"uint256","name":"withdraw_amount","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}
+```
+This JSON can be used by any application that wants to access the Faucet contract once it is deployed. Using the ABI, an application such as a wallet or DApp browser can construct transactions that call the functions in Faucet with the correct arguments and argument types.
+
+All that is needed for an application to interact with a contract is an **ABI** and the **address** where the contract has been deployed.
