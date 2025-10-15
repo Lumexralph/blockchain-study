@@ -86,6 +86,8 @@ To summarize, a contract’s life cycle starts with a creation transaction from 
 Contracts are destroyed by a special EVM opcode called SELFDESTRUCT. n Solidity, this opcode is exposed as a high-level built-in function called selfdestruct, which takes one argument: the address to receive any ether balance remaining in the contract account.
 Note that you must explicitly add this command to your contract if you want it to be deletable—this is the only way a contract can be deleted, and it is not present by default. In this way, users of a contract who might rely on a contract being there forever can be certain that a contract can’t be deleted if it doesn’t contain a SELFDESTRUCT opcode.
 
+When a contract terminates with an error, all the state changes (changes to variables, balances, etc.) are reverted, all the way up the chain of contract calls if more than one contract was called. This ensures that transactions are atomic, meaning they either complete successfully or have no effect on state and are reverted entirely.
+
 ### The Ethereum Contract ABI
 
 In computer software, an application binary interface is an interface between two program modules; often, between the operating system and user programs. An ABI defines how data structures and functions are accessed in machine code.
@@ -102,3 +104,11 @@ Contract JSON ABI
 This JSON can be used by any application that wants to access the Faucet contract once it is deployed. Using the ABI, an application such as a wallet or DApp browser can construct transactions that call the functions in Faucet with the correct arguments and argument types.
 
 All that is needed for an application to interact with a contract is an **ABI** and the **address** where the contract has been deployed.
+
+### Events
+
+Events are a way for your smart contract to communicate that something happened on the blockchain to your app front-end, which can be 'listening' for certain events and take action when they happen.
+When you call a function on a smart contract, you can emit an event. The event is stored in the transaction's log, which is a special data structure in the Ethereum blockchain. Your front-end application can then listen for these events and update the UI accordingly.
+
+When a transaction completes (successfully or not), it produces a transaction receipt. The transaction receipt contains log entries that provide information about the actions that occurred during the execution of the transaction.
+Events are the Solidity high-level objects that are used to construct these logs.
