@@ -112,3 +112,37 @@ When you call a function on a smart contract, you can emit an event. The event i
 
 When a transaction completes (successfully or not), it produces a transaction receipt. The transaction receipt contains log entries that provide information about the actions that occurred during the execution of the transaction.
 Events are the Solidity high-level objects that are used to construct these logs.
+
+Events are a very useful mechanism, not only for intra-contract communication, but also for debugging during development.
+
+### Calling Other Contracts (send, call, callcode, delegatecall)
+
+Calling other contracts from within your contract is a very useful but potentially dangerous operation.
+We’ll examine the various ways you can achieve this and evaluate the risks of each method.
+In short, the risks arise from the fact that you may not know much about a contract you are calling into or that
+is calling into your contract. When writing smart contracts, you must keep in mind that while you may mostly expect
+to be dealing with EOAs, there is nothing to stop arbitrarily complex and perhaps malign contracts from calling into and
+being called by your code.
+
+You mostly don't have control over who calls your contract, so you must be very careful about trusting any data that comes from external contracts.
+
+### Gas and Fees
+
+Every operation that a smart contract performs costs a certain amount of gas. When you deploy a contract or call a function on a contract,
+you need to specify a gas limit and pay for the gas used.
+
+Gas is a resource constraining the maximum amount of computation that Ethereum will allow a transaction to consume. If the gas limit is exceeded during computation, the following series of events occurs:
+
+- An "out of gas" exception is thrown.
+
+- The state of the contract prior to execution is restored (reverted).
+
+- All ether used to pay for the gas is taken as a transaction fee; it is not refunded.
+
+Because gas is paid by the user who initiates the transaction, users are discouraged from calling functions that have a high gas cost.
+It is thus in the programmer’s best interest to minimize the gas cost of a contract’s functions.
+To this end, there are certain practices that are recommended when constructing smart contracts, to minimize the gas cost of a function call.
+
+It is recommended that you evaluate the gas cost of functions as part of your development workflow, to avoid any surprises when deploying contracts to the mainnet.
+
+Futher Reading: https://github.com/ethereumbook/ethereumbook/blob/develop/07smart-contracts-solidity.asciidoc#gas-considerations
