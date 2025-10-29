@@ -146,3 +146,20 @@ To this end, there are certain practices that are recommended when constructing 
 It is recommended that you evaluate the gas cost of functions as part of your development workflow, to avoid any surprises when deploying contracts to the mainnet.
 
 Futher Reading: https://github.com/ethereumbook/ethereumbook/blob/develop/07smart-contracts-solidity.asciidoc#gas-considerations
+
+### Block Explorers
+
+Block explorers are web applications that allow you to view information about blocks, transactions, addresses, and smart contracts on the Ethereum or any blockchain.
+The block contains the data of all the transactions that have been mined within the allocated block time. The block explorer also allows you to view events that were emitted during the execution of the smart contract as well as things such as how much was paid for the gas and amount of ether was transacted, etc.
+Some popular Ethereum block explorers include:
+- [Etherscan](https://etherscan.io/)
+- [Ethplorer](https://ethplorer.io/)
+- [Blockscout](https://blockscout.com/)
+
+For Avalanche, you can use:
+- [SnowTrace](https://snowtrace.io/)
+- [Avalanche Explorer](https://subnets.avax.network/)
+
+### Clients
+
+See: [client](./client/README.md )
