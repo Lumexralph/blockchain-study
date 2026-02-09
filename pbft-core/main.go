@@ -158,3 +158,4 @@ func main() {
 }
 
 // Key Insight: PBFT provides finality through multiple rounds of voting, but requires O(n²) messages.
+// Ref: http://pmg.csail.mit.edu/papers/osdi99.pdf
